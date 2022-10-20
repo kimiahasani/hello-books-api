@@ -7,9 +7,9 @@ class Book:
         self.title = title
         self.description = description
 books = [
-    Book(1, "Book A", "Description A"),
-    Book(2, "Book B", "Description B"),
-    Book(3, "Book C", "Description C"),
+    Book(1, "Fictional Book", "A fantasy novel set in an imaginary world."),
+    Book(2, "Wheel of Time", "A fantasy novel set in an imaginary"),
+    Book(3, "Fictional Book Title", "A fantsy novel set in an imaginary world"),
 ]
 hello_world_bp = Blueprint("hello_world", __name__)
 
@@ -25,16 +25,17 @@ def handle_books():
             "description":book.description,
         })
     return jsonify(books_response), 200
-# @books_bp.route("/<book_id>", methods = ["GET"])
-# def handel_book(book_id):
-#     book_id = int(book_id)
-#     for book in books:
-#         if book.id == book_id:
-#             return {
-#                 "id": book.id,
-#                 "title": book.title,
-#                 "description": book.description
-#             }
+@books_bp.route("/<book_id>", methods=["GET"])
+def handle_book(book_id):
+    book_id = int(book_id)
+    for book in books:
+        if book.id == book_id:
+            return {
+                "id": book.id,
+                "title": book.title,
+                "description": book.description,
+            }
+    return {"message":f"book {book_id} not found"}, 404
 
 
 
